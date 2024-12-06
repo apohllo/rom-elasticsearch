@@ -49,9 +49,13 @@ module ROM
       attr_reader :client
 
       # @api private
-      def initialize(uri, log: false)
-        @url = URI.parse(uri)
-        @client = ::Elasticsearch::Client.new(url: url, log: log)
+      def initialize(uri, client=nil, log: false)
+        if(client)
+          @client = client
+        else
+          @url = URI.parse(uri)
+          @client = ::Elasticsearch::Client.new(url: url, log: log)
+        end
       end
 
       # Return true if a dataset with the given :index exists
